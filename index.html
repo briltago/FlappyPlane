@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <title>Flappy Plane</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 </head>
 <body>
     <div id="warningScreen">
@@ -15,11 +17,13 @@
     </div>
 
     <div id="mainMenu" class="menu" style="display: none;">
-        <h1>Flappy Plane</h1>
-        <button id="startButton">Start Game</button>
-        <button id="settingsButton">Nastavení</button>
-        <button id="instructionsButton">Instrukce</button>
+    <h1>Flappy Plane</h1>
+    <button id="startButton">Start Game</button>
+    <button id="settingsButton">Nastavení</button>
+    <button id="instructionsButton">Instrukce</button>
+    <button id="leaderboardButton">Leaderboard</button>
     </div>
+
     
     <div id="settingsMenu" class="menu" style="display: none;">
         <h1>Nastavení</h1>
@@ -61,7 +65,22 @@
         <button id="restartButton" style="cursor: pointer">Restart</button>
         <button id="menuButton" style="cursor: pointer">Menu</button>
     </div>
-    
+
+    <div id="leaderboardMenu" class="menu" style="display: none;">
+        <h1>Leaderboard</h1>
+        <div id="leaderboardEasy">
+            <h2>Easy</h2>
+            <ol id="leaderboardEasyList"></ol>
+        </div>
+        <div id="leaderboardMedium">
+            <h2>Medium</h2>
+            <ol id="leaderboardMediumList"></ol>
+        </div>
+        <div id="leaderboardHard">
+            <h2>Hard</h2>
+            <ol id="leaderboardHardList"></ol>
+        </div>
+        <button id="backButton3">Back</button>
 
     <canvas id="gameCanvas" style="display: none;"></canvas>
 
