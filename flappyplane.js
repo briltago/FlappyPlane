@@ -37,6 +37,67 @@ document.getElementById("backButton2").addEventListener("click", function() {
     console.log("Návrat z instrukcí do hlavního menu.");
 });
 
+// Show leaderboard
+document.getElementById("leaderboardButton").addEventListener("click", function() {
+    document.getElementById("mainMenu").style.display = "none";
+    document.getElementById("leaderboardMenu").style.display = "block";
+    loadLeaderboard();
+});
+
+document.getElementById("backButton3").addEventListener("click", function() {
+    document.getElementById("leaderboardMenu").style.display = "none";
+    document.getElementById("mainMenu").style.display = "block";
+});
+
+function loadLeaderboard() {
+    ['easy', 'medium', 'hard'].forEach(difficulty => {
+        getLeaderboard(difficulty, scores => {
+            const listElement = document.getElementById(`leaderboard${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}List`);
+            listElement.innerHTML = '';
+            scores.forEach(score => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${score.name}: ${score.score}`;
+                listElement.appendChild(listItem);
+            });
+        });
+    });
+}
+
+function gameOverActions() {
+    if (gameOver) {
+        const playerName = prompt("Enter your name:");
+        const difficulty = document.getElementById("difficultySelect").value;
+        saveScore(difficulty, playerName, score);
+        
+        document.getElementById("gameOverText").style.display = "block";
+        document.getElementById("scoreText2").textContent = `Score: ${score}`;
+        document.getElementById("bestScoreText2").textContent = `Best Score: ${bestScore}`;
+        document.getElementById("restartButton").addEventListener("click", resetGame, { once: true });
+        document.getElementById("menuButton").addEventListener("click", function() {
+            document.getElementById("gameOverText").style.display = "none";
+            document.getElementById("mainMenu").style.display = "block";
+        });
+        return;
+    }
+}
+
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAS-HEnUhRXRd0fv67Bpvy3xNWajY1AEKc",
+  authDomain: "flappy-plane-fcae7.firebaseapp.com",
+  projectId: "flappy-plane-fcae7",
+  storageBucket: "flappy-plane-fcae7.appspot.com",
+  messagingSenderId: "239062289511",
+  appId: "1:239062289511:web:ec12332ecb52e056c2d8c2",
+  measurementId: "G-ZXXT8GNJG8"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -171,6 +232,24 @@ function checkCollision() {
             hitSound.play();
             console.log("Došlo ke kolizi s trubkou.");
         }
+    });
+}
+
+function saveScore(difficulty, playerName, score) {
+    const newScoreKey = firebase.database().ref().child(`leaderboard/${difficulty}`).push().key;
+    firebase.database().ref(`leaderboard/${difficulty}/${newScoreKey}`).set({
+        name: playerName,
+        score: score
+    });
+}
+
+function getLeaderboard(difficulty, callback) {
+    firebase.database().ref(`leaderboard/${difficulty}`).orderByChild('score').limitToLast(10).once('value', snapshot => {
+        const scores = [];
+        snapshot.forEach(childSnapshot => {
+            scores.push(childSnapshot.val());
+        });
+        callback(scores.reverse());
     });
 }
 
