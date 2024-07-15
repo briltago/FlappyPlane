@@ -43,7 +43,6 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Load images
 const planeImg = new Image();
 planeImg.src = 'img/plane.png';
 const pipeImg = new Image();
@@ -62,6 +61,7 @@ let PIPE_DISTANCE = 450;
 let planeY = canvas.height / 2;
 let planeX = canvas.width / 2;
 let planeVelocity = 0;
+let planeAngle = 0;
 let score = 0;
 let bestScore = 0;
 let pipes = [];
@@ -104,7 +104,11 @@ document.getElementById("difficultySelect").addEventListener("change", function(
 });
 
 function drawPlane() {
-    ctx.drawImage(planeImg, planeX - (PLANE_WIDTH / 2), planeY - (PLANE_HEIGHT / 2), PLANE_WIDTH, PLANE_HEIGHT);
+    ctx.save();
+    ctx.translate(planeX, planeY);
+    ctx.rotate(planeAngle);
+    ctx.drawImage(planeImg, -PLANE_WIDTH / 2, -PLANE_HEIGHT / 2, PLANE_WIDTH, PLANE_HEIGHT);
+    ctx.restore();
 }
 
 function drawPipes() {
@@ -118,14 +122,14 @@ function drawScore() {
     ctx.font = "30px Arial";
     ctx.fillStyle = "black";
     ctx.textAlign = "left";
-    ctx.fillText(`Score: ${score}`, 20, 50);
+    ctx.fillText(`Skóre: ${score}`, 20, 50);
 }
 
 function drawBestScore() {
     ctx.font = "30px Arial";
     ctx.fillStyle = "black";
     ctx.textAlign = "left";
-    ctx.fillText(`Best Score: ${bestScore}`, 20, 90);
+    ctx.fillText(`Nejlepší skóre: ${bestScore}`, 20, 90);
 }
 
 function updatePipes() {
@@ -177,6 +181,7 @@ function checkCollision() {
 function resetGame() {
     planeY = canvas.height / 2;
     planeVelocity = 0;
+    planeAngle = 0;
     document.getElementById("gameOverText").style.display = "none";
     if (score > bestScore) {
         bestScore = score;
@@ -196,8 +201,8 @@ function gameLoop(timestamp) {
     if (gameOver) {
         document.getElementById("gameOverText").
         style.display = "block";
-        document.getElementById("scoreText2").textContent = `Score: ${score}`;
-        document.getElementById("bestScoreText2").textContent = `Best Score: ${bestScore}`;
+        document.getElementById("scoreText2").textContent = `Skóre: ${score}`;
+        document.getElementById("bestScoreText2").textContent = `Nejlepší skóre: ${bestScore}`;
         document.getElementById("restartButton").addEventListener("click", resetGame, { once: true });
         document.getElementById("menuButton").addEventListener("click", function() {
             document.getElementById("gameOverText").style.display = "none";
@@ -219,10 +224,13 @@ function gameLoop(timestamp) {
         planeVelocity += GRAVITY;
         planeY += planeVelocity;
 
+        planeAngle = planeVelocity * 0.03;
+
         drawPlane();
         drawPipes();
         drawScore();
         drawBestScore();
+
         updatePipes();
         checkCollision();
     }
@@ -230,20 +238,17 @@ function gameLoop(timestamp) {
     requestAnimationFrame(gameLoop);
 }
 
-function startGame() {
-    lastTime = window.performance.now();
-    gameLoop(lastTime);
-    console.log("Hra byla spuštěna.");
-}
-
-canvas.addEventListener("click", () => {
+canvas.addEventListener("click", function() {
     planeVelocity = FLAP;
-    console.log("Kliknutí na plátno pro let.");
 });
 
-document.addEventListener("keydown", (event) => {
-    if (event.code === "Space") {
+document.addEventListener("keydown", (space) => {
+    if (space.code === "Space") {
         planeVelocity = FLAP;
-        console.log("Stisknutí mezerníku pro let.");
     }
 });
+
+function startGame() {
+    lastTime = window.performance.now();
+    requestAnimationFrame(gameLoop);
+}
