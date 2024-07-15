@@ -14,7 +14,7 @@ body {
 }
 
 .warning {
-    color: #ff2600; /* Červená barva pro varování */
+    color: #ff2600;
     font-size: 26px;
     font-weight: bold;
 }
@@ -22,7 +22,7 @@ body {
 #clickme, #continueButton, #restartButton, #menuButton {
     margin-top: 30px;
     padding: 10px 20px;
-    background-color: #333; /* Tmavá barva pro tlačítka */
+    background-color: #333;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -32,7 +32,7 @@ body {
 }
 
 #clickme:hover, #continueButton:hover, #restartButton:hover, #menuButton:hover {
-    background-color: #555; /* Tmavší odstín při najetí myší */
+    background-color: #555;
 }
 
 #clickme {
@@ -49,10 +49,10 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.8); /* Průhledné pozadí */
-    border-radius: 15px; /* Zaoblené rohy */
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Přidání stínu */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .menu button {
@@ -60,7 +60,7 @@ body {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #333; /* Tmavá barva pro tlačítka */
+    background-color: #333;
     border: none;
     border-radius: 5px;
     color: white;
@@ -68,7 +68,7 @@ body {
 }
 
 .menu button:hover {
-    background-color: #555; /* Tmavší odstín při najetí myší */
+    background-color: #555;
 }
 
 #backbutton {
@@ -106,6 +106,7 @@ body {
 .gameOverText {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
+    text-align: center;
     padding: 20px;
     display: none;
     position: absolute;
@@ -135,7 +136,7 @@ body {
 canvas {
     display: block;
     margin: 0 auto;
-    background-color: #87ceeb; /* Světle modrá barva jako obloha */
+    background-color: #87ceeb;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
