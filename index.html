@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <title>Flappy Plane</title>
+</head>
+<body>
+    <div id="warningScreen">
+        <h1 class="warning">VAROVÁNÍ</h1>
+        <p>Veškeré prvky této hry, včetně uživatele připomínajícího letadlo a trubek představujících mrakodrapy, jsou zcela náhodné a pouze součástí herního prostředí. Tato hra slouží pouze k zabavení.</p>
+        <p id="clickme" style="cursor: pointer">Kliknutím sem pokračujte</p>
+    </div>
+
+    <div id="mainMenu" class="menu" style="display: none;">
+        <h1>Flappy Plane</h1>
+        <button id="startButton">Spustit hru</button>
+        <button id="settingsButton">Nastavení</button>
+        <button id="instructionsButton">Instrukce</button>
+    </div>
+    
+    <div id="settingsMenu" class="menu" style="display: none;">
+        <h1>Nastavení</h1>
+        <div class="settings-item">
+            <label for="sfxVolumeSlider">Hlasitost SFX</label>
+            <input type="range" id="sfxVolumeSlider" min="0" max="100" value="100" step="1">
+        </div>
+        <div class="settings-item">
+            <label for="musicVolumeSlider">Hlasitost Hudby</label>
+            <input type="range" id="musicVolumeSlider" min="0" max="100" value="50" step="1">
+        </div>
+        <div class="settings-item">
+            <label for="difficultySelect">Obtížnost</label>
+            <select id="difficultySelect">
+                <option value="easy">Lehká</option>
+                <option value="medium">Střední</option>
+                <option value="hard">Těžká</option>
+            </select>
+        </div>
+        <button id="backButton">Zpět</button>
+    </div>
+    
+    
+    
+    
+    <div id="instructionsMenu" class="menu" style="display: none;">
+        <h1>Instrukce</h1>
+        <p>Použijte mezerník nebo kliknutí k pohybu letadla.</p>
+        <button id="backButton2">Zpět</button>
+    </div>
+
+    <div id="score" class="score" style="display: none;">Skóre: 0</div>
+    <div id="bestScore" class="best-score" style="display: none;">Nejlepší skóre: 0</div>
+
+    <div id="gameOverText" class="gameOverText">
+        <h1>Konec hry!</h1>
+        <p id="scoreText2"></p>
+        <p id="bestScoreText2"></p>
+        <button id="restartButton" style="cursor: pointer">Restartovat</button>
+        <button id="menuButton" style="cursor: pointer">Hlavní nabídka</button>
+    </div>
+    
+
+    <canvas id="gameCanvas" style="display: none;"></canvas>
+
+    <audio id="hitSound" src="sounds/crash.mp3"></audio>
+    <audio id="backgroundMusic" src="sounds/music.mp3" loop></audio>
+
+    <script src="flappyplane.js"></script>
+</body>
+</html>
